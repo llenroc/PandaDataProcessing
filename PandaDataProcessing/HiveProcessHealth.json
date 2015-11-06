@@ -1,0 +1,40 @@
+﻿{
+  "$schema": "http://datafactories.schema.management.azure.com/schemas/2015-08-01/Microsoft.DataFactory.Pipeline.json",
+  "name": "HiveProcessHealth",
+  "properties": {
+    "description": "Creates the processed Health data.",
+    "activities": [
+      {
+        "name": "Process Health with Hive",
+        "type": "HDInsightHive",
+        "linkedServiceName": "HDInsightAlwaysRunningLinkedService",
+        "inputs": [
+          {
+            "name": "HealthRaw"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "HealthProcessed"
+          }
+        ],
+        "typeProperties": {
+          "scriptPath": "scripts\\ProcessHealthRaw.hql",
+          "scriptLinkedService": "StorageLinkedService"
+        },
+        "policy": {
+          "concurrency": 1,
+          "executionPriorityOrder": "OldestFirst",
+          "retry": 3,
+          "timeout": "01:00:00"
+        },
+        "scheduler": {
+          "frequency": "Hour",
+          "interval": 1
+        }
+      }
+    ],
+    "start": "2015-11-05T00:00:00Z",
+    "end": "2015-12-31T00:00:00Z"
+  }
+}

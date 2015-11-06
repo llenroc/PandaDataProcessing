@@ -1,0 +1,49 @@
+﻿{
+  "$schema": "http://datafactories.schema.management.azure.com/schemas/2015-08-01/Microsoft.DataFactory.Pipeline.json",
+  "name": "HiveProcessFeed",
+  "properties": {
+    "description": "Creates the processed Feed data.",
+    "activities": [
+      {
+        "name": "Process Feed with Hive",
+        "type": "HDInsightHive",
+        "linkedServiceName": "HDInsightAlwaysRunningLinkedService",
+        "inputs": [
+          {
+            "name": "FeedFormat1DetailIntermediate"
+          },
+          {
+            "name": "FeedFormat1HeaderIntermediate"
+          },
+          {
+            "name": "FeedFormat2DetailIntermediate"
+          },
+          {
+            "name": "FeedFormat2HeaderIntermediate"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "FeedProcessed"
+          }
+        ],
+        "typeProperties": {
+          "scriptPath": "scripts\\ProcessFeedRaw.hql",
+          "scriptLinkedService": "StorageLinkedService"
+        },
+        "policy": {
+          "concurrency": 1,
+          "executionPriorityOrder": "OldestFirst",
+          "retry": 3,
+          "timeout": "01:00:00"
+        },
+        "scheduler": {
+          "frequency": "Hour",
+          "interval": 1
+        }
+      }
+    ],
+    "start": "2015-11-05T00:00:00Z",
+    "end": "2015-12-31T00:00:00Z"
+  }
+}

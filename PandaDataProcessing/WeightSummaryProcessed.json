@@ -1,0 +1,57 @@
+﻿{
+  "$schema": "http://datafactories.schema.management.azure.com/schemas/2015-08-01/Microsoft.DataFactory.Table.json",
+  "name": "WeightSummaryProcessed",
+  "properties": {
+    "type": "AzureBlob",
+    "linkedServiceName": "StorageLinkedService",
+    "structure": [
+      {
+        "name": "StudyID",
+        "type": "String"
+      },
+      {
+        "name": "Pen",
+        "type": "String"
+      },
+      {
+        "name": "TRT",
+        "type": "String"
+      },
+      {
+        "name": "Rep",
+        "type": "String"
+      },
+      {
+        "name": "Ration",
+        "type": "String"
+      },
+      {
+        "name": "ID",
+        "type": "String"
+      },
+      {
+        "name": "IWT",
+        "type": "String"
+      },
+      {
+        "name": "FWT",
+        "type": "String"
+      },
+      {
+        "name": "ADG",
+        "type": "String"
+      }
+    ],
+    "typeProperties": {
+      "folderPath": "hdi/processed/weightsummary/",
+      "format": {
+        "type": "TextFormat",
+        "columnDelimiter": ","
+      }
+    },
+    "availability": {
+      "frequency": "Hour",
+      "interval": 1
+    }
+  }
+}
